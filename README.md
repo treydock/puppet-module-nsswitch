@@ -37,6 +37,12 @@ Should VAS (Quest Authentication Services) be used? Valid values are 'absent' an
 
 - *Default*: 'absent'
 
+ldap_nss_module
+---------------
+Name of the LDAP module to use when `ensure_ldap` is 'present'.  Valid values are 'ldap' and 'sss'.
+
+- *Default*: 'ldap'
+
 vas_nss_module
 --------------
 Name of NSS module to use for VAS.

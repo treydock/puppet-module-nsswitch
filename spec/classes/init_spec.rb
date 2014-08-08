@@ -139,6 +139,50 @@ aliases:    files
     }
   end
 
+  context 'with ldap enabled using sss' do
+    let :params do
+      {
+        :ensure_ldap      => 'present',
+        :ldap_nss_module  => 'sss',
+      }
+    end
+
+    it {
+      should contain_class('nsswitch')
+      should contain_file('nsswitch_config_file').with({
+        'ensure'  => 'file',
+        'path'    => '/etc/nsswitch.conf',
+        'owner'   => 'root',
+        'group'   => 'root',
+        'mode'    => '0644',
+      })
+      should contain_file('nsswitch_config_file').with_content(
+%{# This file is being maintained by Puppet.
+# DO NOT EDIT
+
+passwd:     files sss
+shadow:     files sss
+group:      files sss
+
+sudoers:    files sss
+
+hosts:      files dns
+
+bootparams: files
+ethers:     files
+netmasks:   files
+networks:   files
+protocols:  files sss
+rpc:        files
+services:   files sss
+netgroup:   files sss
+publickey:  files
+automount:  files sss
+aliases:    files
+})
+    }
+  end
+
   context 'with vas enabled' do
     let :params do
       { :ensure_vas => 'present' }
@@ -343,6 +387,18 @@ aliases:    files
   context 'with config_file set to invalid value' do
     let :params do
       { :config_file => 'not/an/absolute/path' }
+    end
+
+    it do
+      expect {
+        should contain_class('nsswitch')
+      }.to raise_error(Puppet::Error)
+    end
+  end
+
+  context 'with ldap_nss_module set to invalid value' do
+    let :params do
+      { :ldap_nss_module => 'foo' }
     end
 
     it do

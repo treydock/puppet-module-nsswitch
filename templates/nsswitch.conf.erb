@@ -1,11 +1,11 @@
 # This file is being maintained by Puppet.
 # DO NOT EDIT
 
-passwd:     files<% if @ensure_ldap == 'present' %> ldap<% end %><% if @ensure_vas == 'present' %> <%= @vas_nss_module_passwd %><% end %>
-shadow:     files<% if @ensure_ldap == 'present' %> ldap<% end %>
-group:      files<% if @ensure_ldap == 'present' %> ldap<% end %><% if @ensure_vas == 'present' %> <%= @vas_nss_module_group %><% end %>
+passwd:     files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %><% if @ensure_vas == 'present' %> <%= @vas_nss_module_passwd %><% end %>
+shadow:     files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %>
+group:      files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %><% if @ensure_vas == 'present' %> <%= @vas_nss_module_group %><% end %>
 
-sudoers:    files<% if @ensure_ldap == 'present' %> ldap<% end %>
+sudoers:    files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %>
 
 hosts:      files dns
 
@@ -13,12 +13,12 @@ bootparams: files
 ethers:     files
 netmasks:   files
 networks:   files
-protocols:  files<% if @ensure_ldap == 'present' %> ldap<% end %>
+protocols:  files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %>
 rpc:        files
-services:   files<% if @ensure_ldap == 'present' %> ldap<% end %><% if @ensure_vas == 'present' %><% if @vas_nss_module_services != '' %> <%= @vas_nss_module_services %><% end %><% end %>
-netgroup:   files<% if @ensure_ldap == 'present' %> ldap<% end %><% if @ensure_vas == 'present' %><% if @vas_nss_module_netgroup != '' %> <%= @vas_nss_module_netgroup %><% end %><% end %>
+services:   files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %><% if @ensure_vas == 'present' %><% if @vas_nss_module_services != '' %> <%= @vas_nss_module_services %><% end %><% end %>
+netgroup:   files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %><% if @ensure_vas == 'present' %><% if @vas_nss_module_netgroup != '' %> <%= @vas_nss_module_netgroup %><% end %><% end %>
 publickey:  files
-automount:  files<% if @ensure_ldap == 'present' %> ldap<% end %><% if @ensure_vas == 'present' %><% if @vas_nss_module_automount != '' %> <%= @vas_nss_module_automount %><% end %><% end %>
+automount:  files<% if @ensure_ldap == 'present' %> <%= @ldap_nss_module %><% end %><% if @ensure_vas == 'present' %><% if @vas_nss_module_automount != '' %> <%= @vas_nss_module_automount %><% end %><% end %>
 aliases:    files<% if @ensure_vas == 'present' %><% if @vas_nss_module_aliases != '' %> <%= @vas_nss_module_aliases %><% end %><% end %>
 <% if @nsswitch_ipnodes_real != nil -%>
 ipnodes:    <%= @nsswitch_ipnodes_real %>
